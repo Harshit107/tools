@@ -1,72 +1,105 @@
-# LinkNest
+# 🦅 LinkNest
 
-LinkNest is a modern, minimal, and productivity-focused Website Organization Tool. It allows users to save, group, and open important websites in a clean, single-page dashboard.
+<div align="center">
+  <img src="./assets/linknest_banner.png" alt="LinkNest Dashboard" width="100%" />
 
-![LinkNest Dashboard](https://via.placeholder.com/800x400?text=LinkNest+Dashboard+Preview)
+  <br />
+
+  <h1>Organize Your Digital Life</h1>
+  
+  <p>
+    <strong>LinkNest</strong> is a modern, minimalist productivity tool designed to help you manage your important websites and resources in a clutter-free environment.
+  </p>
+
+  <p>
+    <a href="#-features">Features</a> •
+    <a href="#-tech-stack">Tech Stack</a> •
+    <a href="#-getting-started">Getting Started</a> •
+    <a href="#-license">License</a>
+  </p>
+
+  ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+  ![React](https://img.shields.io/badge/react-19.0.0-61dafb.svg?logo=react)
+  ![TypeScript](https://img.shields.io/badge/typescript-5.0.0-3178c6.svg?logo=typescript)
+  ![Vite](https://img.shields.io/badge/vite-6.0.0-646cff.svg?logo=vite)
+</div>
+
+<br />
 
 ## 🚀 Features
 
-- **Folder Organization**: Create and manage custom folders to group your links.
-- **Website Management**: Add websites with titles and URLs.
-- **Visual Previews**: Automatic favicon fetching for easy visual recognition.
-- **Modern UI**: Clean SaaS-style dashboard with soft shadows and rounded corners.
-- **Responsive Design**: Works on various screen sizes.
-- **Single Page Application**: Fast, seamless experience without page reloads.
+- **📂 Smart Collections**: Group your links into custom folders with titles and descriptions.
+- **✨ Visual Bookmarks**: Auto-fetched favicons and sleek card designs for your websites.
+- **🌗 Day / Night Mode**: A stunning dark mode that's easy on the eyes.
+- **🗑️ Safe Management**: Robust deletion flow with confirmation modals to prevent accidents.
+- **⚡ Blazing Fast**: Built on Vite and React 19 for instantaneous interactions.
+- **📱 Responsive**: Looks great on desktop, tablet, and mobile.
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [React 19](https://react.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Styling**: [Styled Components](https://styled-components.com/) (CSS-in-JS)
-- **State Management**: [TanStack Query (React Query)](https://tanstack.com/query/latest)
-- **Icons**: [Lucide React](https://lucide.dev/)
+Built with the latest and greatest web technologies:
 
-## 📦 Installation & Setup
+| Category | Technology | Description |
+|----------|------------|-------------|
+| **Core** | [React 19](https://react.dev/) | The library for web and native user interfaces |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) | JavaScript with syntax for types |
+| **Build** | [Vite](https://vitejs.dev/) | Next Generation Frontend Tooling |
+| **Styling** | [Styled Components](https://styled-components.com/) | Visual primitives for the component age |
+| **State** | [TanStack Query](https://tanstack.com/query/latest) | Powerful asynchronous state management |
+| **Icons** | [Lucide](https://lucide.dev/) | Beautiful & consistent open-source icons |
 
-1.  **Clone the repository:**
+## 🏁 Getting Started
+
+Clone the repository and start organizing within minutes.
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1.  **Clone the repository**
     ```bash
     git clone https://github.com/Harshit107/tools.git
     cd tool-manager
     ```
 
-2.  **Install dependencies:**
+2.  **Install dependencies**
     ```bash
     npm install
     ```
 
-3.  **Run the development server:**
+3.  **Ignite the engine**
     ```bash
     npm run dev
     ```
-    The app will be available at `http://localhost:5173`.
+    Open `http://localhost:5173` to view it in the browser.
 
-4.  **Build for production:**
-    ```bash
-    npm run build
-    ```
+## 📸 Screenshots
 
-## 📂 Project Structure
+<div align="center">
+  <h3>Dark Mode</h3>
+  <!-- Add screenshot here if available later -->
+  <p><i>Experience a polished UI designed for focus.</i></p>
+</div>
 
-```
-src/
-├── api/             # Mock API layer (simulates backend)
-├── config/          # App-wide configuration
-├── constants/       # UI constants (colors, spacing, shadows)
-├── components/      # Reusable UI components
-│   ├── ContentArea/ # Main grid display
-│   ├── FolderList/  # Sidebar folder navigation
-│   ├── Header/      # App header
-│   ├── Modals/      # Interaction modals
-│   ├── Sidebar/     # Main navigation sidebar
-│   └── WebsiteCard/ # Individual website link card
-├── hooks/           # Custom React hooks (Data fetching)
-├── pages/           # Page layouts (Dashboard)
-├── types/           # TypeScript interfaces
-└── GlobalStyles.ts  # Global styled-components styles
-```
+## 🤝 Contributing
 
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+  <p>Made with ❤️ by Harshit</p>
+</div>

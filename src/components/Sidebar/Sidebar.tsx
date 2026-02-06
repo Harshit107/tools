@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { BORDER_RADIUS, SPACING } from '../../constants/ui.constants';
 import { useFolders } from '../../hooks/useFolders';
 import { FolderList } from '../FolderList/FolderList';
+import { CreateFolderModal } from '../Modals/CreateFolderModal';
 
 interface SidebarProps {
   selectedFolderId: string | null;
@@ -72,34 +73,12 @@ const NewFolderButton = styled.button`
   }
 `;
 
-const NewFolderInput = styled.input`
-  width: 100%;
-  padding: ${SPACING.sm};
-  border: 1px solid ${({ theme }) => theme.primary};
-  border-radius: ${BORDER_RADIUS.md};
-  outline: none;
-  background-color: ${({ theme }) => theme.background};
-  color: ${({ theme }) => theme.text.primary};
-`;
-
 export const Sidebar: React.FC<SidebarProps> = ({ selectedFolderId, onSelectFolder }) => {
-  const { createFolder, isCreating } = useFolders();
-  const [isAdding, setIsAdding] = useState(false);
-  const [newFolderName, setNewFolderName] = useState('');
+  const { createFolder } = useFolders();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleCreate = async () => {
-    if (!newFolderName.trim()) {
-      setIsAdding(false);
-      return;
-    }
-    await createFolder(newFolderName);
-    setNewFolderName('');
-    setIsAdding(false);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') handleCreate();
-    if (e.key === 'Escape') setIsAdding(false);
+  const handleCreate = async (data: { name: string; description?: string }) => {
+    await createFolder(data);
   };
 
   return (
@@ -114,22 +93,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedFolderId, onSelectFold
       </ScrollArea>
 
       <Footer>
-        {isAdding ? (
-          <NewFolderInput
-            autoFocus
-            placeholder="Folder name..."
-            value={newFolderName}
-            onChange={(e) => setNewFolderName(e.target.value)}
-            onBlur={handleCreate} // Auto-submit on blur for easier UX
-            onKeyDown={handleKeyDown}
-            disabled={isCreating}
-          />
-        ) : (
-          <NewFolderButton onClick={() => setIsAdding(true)}>
-            <Plus size={16} /> New Folder
-          </NewFolderButton>
-        )}
+        <NewFolderButton onClick={() => setIsModalOpen(true)}>
+          <Plus size={16} /> New Folder
+        </NewFolderButton>
       </Footer>
+
+      <CreateFolderModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onSubmit={handleCreate} 
+      />
     </SidebarContainer>
   );
 };

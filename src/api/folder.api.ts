@@ -15,12 +15,13 @@ export const fetchFolders = async (): Promise<Folder[]> => {
   });
 };
 
-export const createFolder = async (name: string): Promise<Folder> => {
+export const createFolder = async (name: string, description?: string): Promise<Folder> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const newFolder: Folder = {
         id: crypto.randomUUID(),
         name,
+        description,
         createdAt: Date.now(),
       };
       folders = [...folders, newFolder];

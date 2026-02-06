@@ -10,7 +10,7 @@ export const useFolders = () => {
   });
 
   const createFolderMutation = useMutation({
-    mutationFn: (name: string) => createFolder(name),
+    mutationFn: ({ name, description }: { name: string; description?: string }) => createFolder(name, description),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['folders'] });
     },

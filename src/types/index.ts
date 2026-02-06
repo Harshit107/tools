@@ -10,5 +10,6 @@ export interface Website {
 export interface Folder {
   id: string;
   name: string;
+  description?: string;
   createdAt: number;
 }
