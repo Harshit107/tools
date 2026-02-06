@@ -66,13 +66,6 @@ src/
 └── GlobalStyles.ts  # Global styled-components styles
 ```
 
-## 🔮 Future Improvements
-
-- [ ] persistent backend integration (Node.js/Database)
-- [ ] Drag-and-drop reordering for folders and cards
-- [ ] Dark mode toggle
-- [ ] Drag website from one folder to another
-- [ ] User authentication
 
 ## 📄 License
 
