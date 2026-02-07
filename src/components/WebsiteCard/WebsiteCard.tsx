@@ -7,9 +7,10 @@ import type { Website } from '../../types';
 interface WebsiteCardProps {
   website: Website;
   onDelete?: (id: string) => void;
+  onView?: (website: Website) => void;
 }
 
-const CardContainer = styled.a`
+const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.surface};
@@ -18,7 +19,6 @@ const CardContainer = styled.a`
   padding: ${SPACING.md};
   cursor: pointer;
   transition: ${TRANSITIONS.default};
-  text-decoration: none;
   position: relative;
   height: 140px;
 
@@ -78,6 +78,7 @@ const Actions = styled.div`
   gap: ${SPACING.xs};
   opacity: 0;
   transition: ${TRANSITIONS.default};
+  z-index: 2;
 
   ${CardContainer}:hover & {
     opacity: 1;
@@ -91,6 +92,7 @@ const ActionButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 
   &:hover {
     color: ${({ theme }) => theme.text.primary};
@@ -103,21 +105,32 @@ const ActionButton = styled.div`
   }
 `;
 
-export const WebsiteCard: React.FC<WebsiteCardProps> = ({ website, onDelete }) => {
+export const WebsiteCard: React.FC<WebsiteCardProps> = ({ website, onDelete, onView }) => {
   const handleDelete = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     onDelete?.(website.id);
   };
 
+  const handleOpenLink = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(website.url, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onView?.(website);
+  };
+
   return (
-    <CardContainer href={website.url} target="_blank" rel="noopener noreferrer">
+    <CardContainer onClick={handleCardClick}>
       <Actions>
-        <ActionButton>
+        <ActionButton onClick={handleOpenLink} title="Open in new tab">
            <ExternalLink size={16} />
         </ActionButton>
         {onDelete && (
-          <ActionButton className="delete" onClick={handleDelete}>
+          <ActionButton className="delete" onClick={handleDelete} title="Delete">
             <Trash2 size={16} />
           </ActionButton>
         )}
@@ -132,7 +145,6 @@ export const WebsiteCard: React.FC<WebsiteCardProps> = ({ website, onDelete }) =
         ) : (
           <Globe size={24} color="#64748B" /> 
         )}
-        {/* Fallback icon if image fails */}
         <div className="icon-fallback" style={{ display: 'none' }}>
            <Globe size={24} color="#64748B" />
         </div>

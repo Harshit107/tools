@@ -2,8 +2,8 @@ import type { Website } from '../types';
 
 // Mock Data
 let websites: Website[] = [
-  { id: '1', folderId: '1', title: 'GitHub', url: 'https://github.com', createdAt: Date.now() },
-  { id: '2', folderId: '1', title: 'Linear', url: 'https://linear.app', createdAt: Date.now() },
+  { id: '1', folderId: '1', title: 'GitHub', url: 'https://github.com', createdAt: Date.now(), username: 'harshit107' },
+  { id: '2', folderId: '1', title: 'Linear', url: 'https://linear.app', createdAt: Date.now(), username: 'dev-team', encryptedPassword: btoa('secret123') },
   { id: '3', folderId: '2', title: 'Twitter', url: 'https://twitter.com', createdAt: Date.now() },
   { id: '4', folderId: '3', title: 'YouTube', url: 'https://youtube.com', createdAt: Date.now() },
 ];

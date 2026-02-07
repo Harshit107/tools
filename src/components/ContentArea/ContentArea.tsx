@@ -1,11 +1,12 @@
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { BORDER_RADIUS, SPACING } from '../../constants/ui.constants';
 import { useFolders } from '../../hooks/useFolders';
 import { useWebsites } from '../../hooks/useWebsites';
+import type { Website } from '../../types';
 import { AddWebsiteModal } from '../Modals/AddWebsiteModal';
 import { ConfirmationModal } from '../Modals/ConfirmationModal';
+import { WebsiteDetailsModal } from '../Modals/WebsiteDetailsModal';
 import { WebsiteCard } from '../WebsiteCard/WebsiteCard';
 
 interface ContentAreaProps {
@@ -13,38 +14,40 @@ interface ContentAreaProps {
 }
 
 const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
+  
+  padding: 32px;
+  flex: 1;
 `;
 
 const ContentHeader = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: ${SPACING.xl};
+  align-items: center;
+  margin-bottom: 32px;
 `;
 
 const FolderTitle = styled.h1`
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 600;
   color: ${({ theme }) => theme.text.primary};
 `;
 
 const HeaderActions = styled.div`
   display: flex;
-  gap: ${SPACING.sm};
+  gap: 16px;
 `;
 
 const AddButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: ${SPACING.xs};
   background-color: ${({ theme }) => theme.primary};
   color: white;
   border: none;
-  padding: ${SPACING.sm} ${SPACING.md};
-  border-radius: ${BORDER_RADIUS.md};
-  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
@@ -54,33 +57,34 @@ const AddButton = styled.button`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: ${SPACING.lg};
-`;
-
-const LoadingState = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: ${SPACING.xl};
-  color: ${({ theme }) => theme.text.muted};
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
 `;
 
 const EmptyState = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
   text-align: center;
-  padding: ${SPACING.xxl};
-  background-color: ${({ theme }) => theme.surface};
-  border-radius: ${BORDER_RADIUS.lg};
-  border: 1px dashed ${({ theme }) => theme.border};
-  color: ${({ theme }) => theme.text.secondary};
+  color: ${({ theme }) => theme.text.muted};
 
   h3 {
-    margin-bottom: ${SPACING.sm};
+    margin-bottom: 8px;
+    font-size: 1.25rem;
     color: ${({ theme }) => theme.text.primary};
   }
 
   p {
-    margin-bottom: ${SPACING.lg};
+    margin-bottom: 24px;
   }
+`;
+
+const LoadingState = styled.div`
+  padding: 32px;
+  text-align: center;
+  color: ${({ theme }) => theme.text.muted};
 `;
 
 export const ContentArea: React.FC<ContentAreaProps> = ({ folderId }) => {
@@ -88,15 +92,20 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ folderId }) => {
   const { folders } = useFolders();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingWebsiteId, setDeletingWebsiteId] = useState<string | null>(null);
+  const [viewingWebsite, setViewingWebsite] = useState<Website | null>(null);
 
   const currentFolder = folders.find(f => f.id === folderId);
 
-  const handleAddWebsite = async (data: { title: string; url: string }) => {
+  const handleAddWebsite = async (data: { title: string; url: string; username?: string; encryptedPassword?: string }) => {
     await addWebsite({ ...data, folderId });
   };
 
   const handleDeleteRequest = (id: string) => {
     setDeletingWebsiteId(id);
+  };
+
+  const handleViewRequest = (website: Website) => {
+    setViewingWebsite(website);
   };
 
   const confirmDelete = async () => {
@@ -130,19 +139,25 @@ export const ContentArea: React.FC<ContentAreaProps> = ({ folderId }) => {
       ) : (
         <Grid>
           {websites.map(site => (
-            <WebsiteCard 
-              key={site.id} 
-              website={site} 
+            <WebsiteCard
+              key={site.id}
+              website={site}
               onDelete={handleDeleteRequest}
+              onView={handleViewRequest}
             />
           ))}
         </Grid>
       )}
 
-      <AddWebsiteModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <AddWebsiteModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         onSubmit={handleAddWebsite}
+      />
+
+      <WebsiteDetailsModal
+        website={viewingWebsite}
+        onClose={() => setViewingWebsite(null)}
       />
 
       <ConfirmationModal

@@ -2,11 +2,12 @@ import { X } from 'lucide-react';
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { BORDER_RADIUS, SHADOWS, SPACING } from '../../constants/ui.constants';
+import { encryptPassword } from '../../utils/security.utils';
 
 interface AddWebsiteModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { title: string; url: string }) => Promise<void>;
+  onSubmit: (data: { title: string; url: string; username?: string; encryptedPassword?: string }) => Promise<void>;
 }
 
 const fadeIn = keyframes`
@@ -133,6 +134,8 @@ const Button = styled.button<{ $variant?: 'primary' | 'secondary' }>`
 export const AddWebsiteModal: React.FC<AddWebsiteModalProps> = ({ isOpen, onClose, onSubmit }) => {
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
@@ -147,10 +150,19 @@ export const AddWebsiteModal: React.FC<AddWebsiteModalProps> = ({ isOpen, onClos
       formattedUrl = `https://${url}`;
     }
 
+    const encryptedPwd = password ? encryptPassword(password) : undefined;
+
     try {
-      await onSubmit({ title, url: formattedUrl });
+      await onSubmit({ 
+        title, 
+        url: formattedUrl,
+        username: username || undefined,
+        encryptedPassword: encryptedPwd
+      });
       setTitle('');
       setUrl('');
+      setUsername('');
+      setPassword('');
       onClose();
     } catch (error) {
       console.error(error);
@@ -188,6 +200,26 @@ export const AddWebsiteModal: React.FC<AddWebsiteModalProps> = ({ isOpen, onClos
               required
             />
           </FormGroup>
+          
+          <FormGroup>
+            <Label>Username / Email (Optional)</Label>
+            <Input 
+              placeholder="user@example.com" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Password (Optional)</Label>
+            <Input 
+              type="password"
+              placeholder="••••••••" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+            />
+          </FormGroup>
+
           <ButtonGroup>
             <Button type="button" $variant="secondary" onClick={onClose}>Cancel</Button>
             <Button type="submit" $variant="primary" disabled={isSubmitting}>

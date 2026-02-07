@@ -5,6 +5,8 @@ export interface Website {
   folderId: string;
   favicon?: string;
   createdAt: number;
+  username?: string;
+  encryptedPassword?: string;
 }
 
 export interface Folder {
